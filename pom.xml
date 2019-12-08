@@ -17,7 +17,7 @@
             <id>yulin</id>
             <name>yulin</name>
             <email>2376539013@qq.com</email>
-            <!--<url></url>-->
+            <url>https://github.com/shanhelin/allweb.git</url>
             <timezone>8</timezone>
         </developer>
     </developers>
