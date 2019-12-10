@@ -9,6 +9,7 @@
         <module name="redis" />
         <module name="spring-jpa" />
         <module name="spring-mybaties" />
+        <module name="springboot-hello-world" />
         <module name="weixin" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
       <module name="redis" options="-parameters" />
       <module name="spring-jpa" options="-parameters" />
       <module name="spring-mybaties" options="-parameters" />
+      <module name="springboot-hello-world" options="-parameters" />
       <module name="weixin" options="-parameters" />
     </option>
   </component>
