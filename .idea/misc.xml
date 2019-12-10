@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/redis/pom.xml" />
         <option value="$PROJECT_DIR$/spring-jpa/pom.xml" />
         <option value="$PROJECT_DIR$/spring-mybaties/pom.xml" />
+        <option value="$PROJECT_DIR$/weixin/pom.xml" />
       </list>
     </option>
   </component>

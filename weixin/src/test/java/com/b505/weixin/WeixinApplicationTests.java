@@ -1,10 +1,10 @@
-package com.b505.springmybaties.springmybaties;
+package com.b505.weixin;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringMybatiesApplicationTests {
+class WeixinApplicationTests {
 
     @Test
     void contextLoads() {

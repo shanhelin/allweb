@@ -33,6 +33,7 @@
         <module>redis</module>
         <module>spring-jpa</module>
         <module>spring-mybaties</module>
+        <module>weixin</module>
     </modules>
 
     <properties>
