@@ -2,13 +2,12 @@ package com.b505.redis.redis.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Set;
-
-import static io.netty.util.AttributeKey.exists;
-
+import java.util.concurrent.TimeUnit;
 
 /**
  * 描述:针对redis的常规操作
@@ -54,10 +53,37 @@ public class RedisService {
     }
 
     //读取缓存
+    public Object get(String key){
 
+        ValueOperations<Serializable,Object>  operations=redisTemplate.opsForValue();
+        return operations.get( key );
+    }
 
+    //写入缓存，不带时间
+    public boolean set(String key, Object value) {
+        boolean flag = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.set(key, value);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
 
-
-
+    //写入缓存，带时间
+    public boolean set(String key, Object value, Long expireTime) {
+        boolean flag = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.set(key, value);
+            redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
 
 }
