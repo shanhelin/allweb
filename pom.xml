@@ -35,6 +35,8 @@
         <module>spring-mybaties</module>
         <module>weixin</module>
         <module>springboot-hello-world</module>
+        <module>manyThread</module>
+        <module>manyThread</module>
     </modules>
 
     <properties>

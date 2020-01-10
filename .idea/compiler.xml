@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="manyThread" />
         <module name="redis" />
         <module name="spring-jpa" />
         <module name="spring-mybaties" />
@@ -17,6 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="allweb" options="-parameters" />
+      <module name="manyThread" options="-parameters" />
       <module name="redis" options="-parameters" />
       <module name="spring-jpa" options="-parameters" />
       <module name="spring-mybaties" options="-parameters" />
