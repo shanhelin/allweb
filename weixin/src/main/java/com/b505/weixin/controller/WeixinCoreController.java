@@ -1,3 +1,4 @@
+
 package com.b505.weixin.controller;
 
 import com.b505.weixin.config.WeiXinSignUtil;
@@ -5,36 +6,36 @@ import com.b505.weixin.service.CoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.Map;
+
 
 /**
  * 描述：微信请求处理的核心类(
  * author：yulin
  * Create date 2020-2-7 19:57
  */
+
 @RestController
+@RequestMapping(value="/wechat")
 public class WeixinCoreController {
 
     private static Logger logger = LoggerFactory.getLogger(WeixinCoreController.class);
 
     @Autowired
     private WeiXinSignUtil weixinSignUtil;
-    /**
+
+/**
      * 描述: 验证请求是否来自微信服务器
      * Return: 返回微信服务器发过来的验证字符
      * author：yulin
      * Create date 2020-2-7 19:59
      */
-    @GetMapping(value="/wechat"	)
+
+    @RequestMapping(method= RequestMethod.GET   )
     public String WeChatInterface(HttpServletRequest request)throws Exception{
         System.out.println("-------------验证微信服务号信息开始----------");
         // 微信加密签名
@@ -58,12 +59,14 @@ public class WeixinCoreController {
         }
     }
 
-    /**
+
+/**
      * 描述：处理微信服务器发来的消息
      * @param request
      * @param response
      * author：yulin
      */
+
     @RequestMapping(method = RequestMethod.POST)
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
@@ -82,6 +85,7 @@ public class WeixinCoreController {
 
     }
 }
+
 
 
 

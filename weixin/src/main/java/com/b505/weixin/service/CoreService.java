@@ -1,9 +1,13 @@
 package com.b505.weixin.service;
 
 import com.b505.weixin.message.req.TextMessage;
+import com.b505.weixin.message.resp.Article;
+import com.b505.weixin.message.resp.NewsMessage;
 import com.b505.weixin.util.MessageUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,15 +46,132 @@ public class CoreService {
             textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
             textMessage.setFuncFlag(0);
 
+            //默认回复信息
+            textMessage.setContent("谢谢您关注我的微信公众号");
+            respMessage=MessageUtil.textMessageToXml(textMessage);
+
+
             // 文本消息
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
 
-                //发送图文消息
+               //针对用户发送过来的图文消息进行相关的相应
+               //接受用户发送过来的文本消息
+                String content=requestMap.get("Content");
+
+                //创建图文消息
+                NewsMessage newsMessage = new NewsMessage();
+                newsMessage.setToUserName(fromUserName);
+                newsMessage.setFromUserName(toUserName);
+                newsMessage.setCreateTime(new Date().getTime());
+                newsMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+                newsMessage.setFuncFlag(0);
+
+                List<Article> articleList = new ArrayList<Article>();
+
+                // 单图文消息
+                if ("1".equals(content)) {
+                    Article article = new Article();
+                    article.setTitle("微信公众帐号开发");
+                    article.setDescription("B505科研是微信公众账号开发学习");
+                    article.setPicUrl("http://39.105.65.69/img/2.png");
+                    article.setUrl("http://39.105.65.69/text");
+                    articleList.add(article);
+                    // 设置图文消息个数
+                    newsMessage.setArticleCount(articleList.size());
+                    // 设置图文消息包含的图文集合
+                    newsMessage.setArticles(articleList);
+                    // 将图文消息对象转换成xml字符串
+                    respMessage = MessageUtil.newsMessageToXml(newsMessage);
+
+                    return respMessage;
+                }
+
+                // 多图文消息
+                else if ("3".equals(content)) {
+                    Article article1 = new Article();
+                    article1.setPicUrl("http://hyxw.work/img/108.jpg");
+                    article1.setUrl( "" );
+
+                    Article article2 = new Article();
+                    article2.setTitle("学会章程");
+                    article2.setDescription("");
+                    article2.setPicUrl("http://hyxw.work/img/constitution.png");
+                    article2.setUrl( "http://hyxw.work/constitution" );
 
 
+                    Article article4 = new Article();
+                    article4.setTitle("分会介绍");
+                    article4.setDescription("");
+                    article4.setPicUrl("http://hyxw.work/img/location.png");
+                    article4.setUrl( "http://hyxw.work/location" );
+
+                    Article article5 = new Article();
+                    article5.setTitle("组织机构");
+                    article5.setDescription("");
+                    article5.setPicUrl("http://hyxw.work/img/organization.png");
+                    article5.setUrl( "http://hyxw.work/organization" );
+
+                    Article article6 = new Article();
+                    article6.setTitle("服务体系");
+                    article6.setDescription("");
+                    article6.setPicUrl("http://hyxw.work/img/service.png");
+                    article6.setUrl( "http://hyxw.work/service" );
 
 
-                respContent = "您发送的是文本消息！";
+                    articleList.add(article1);
+                    articleList.add(article2);
+                    articleList.add(article4);
+                    articleList.add(article5);
+                    articleList.add(article6);
+
+
+                    newsMessage.setArticleCount(articleList.size());
+                    newsMessage.setArticles(articleList);
+                    respMessage = MessageUtil.newsMessageToXml(newsMessage);
+
+                    return respMessage;
+                }
+                // 多图文消息---首条消息不含图片
+                else if ("4".equals(content)) {
+                    Article article1 = new Article();
+                    article1.setTitle("微信公众帐号开发");
+                    article1.setDescription("");
+                    // 将图片置为空
+                    article1.setPicUrl("");
+                    article1.setUrl("http://39.105.65.69/text");
+
+                    Article article2 = new Article();
+                    article2.setTitle("第4篇\n微信公众账号开发");
+                    article2.setDescription("");
+                    article2.setPicUrl("http://39.105.65.69/img/2.png");
+                    article2.setUrl("http://39.105.65.69/text");
+
+                    Article article3 = new Article();
+                    article3.setTitle("第5篇\n微信公众账号开发");
+                    article3.setDescription("");
+                    article3.setPicUrl("http://39.105.65.69/img/2.png");
+                    article3.setUrl("http://39.105.65.69/text");
+
+                    Article article4 = new Article();
+                    article4.setTitle("第6篇\n微信公众账号开发");
+                    article4.setDescription("");
+                    article4.setPicUrl("http://39.105.65.69/img/2.png");
+                    article4.setUrl("http://39.105.65.69/text");
+
+                    articleList.add(article1);
+                    articleList.add(article2);
+                    articleList.add(article3);
+                    articleList.add(article4);
+                    newsMessage.setArticleCount(articleList.size());
+                    newsMessage.setArticles(articleList);
+                    respMessage = MessageUtil.newsMessageToXml(newsMessage);
+
+                    return respMessage;
+                }
+
+
+                return respMessage;
+
             }
             // 图片消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
@@ -84,10 +205,12 @@ public class CoreService {
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
                     // TODO 自定义菜单权没有开放，暂不处理该类消息
                 }
+
+                textMessage.setContent(respContent);
+                respMessage = MessageUtil.textMessageToXml(textMessage);
             }
 
-            textMessage.setContent(respContent);
-            respMessage = MessageUtil.textMessageToXml(textMessage);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

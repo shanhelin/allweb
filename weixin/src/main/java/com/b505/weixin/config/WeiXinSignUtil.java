@@ -55,7 +55,6 @@ public class WeiXinSignUtil {
         return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
     }
 
-
     /**
      * 将字节数组转换为十六进制字符串
      * @param byteArray
@@ -70,7 +69,6 @@ public class WeiXinSignUtil {
         }
         return strDigest;
     }
-
 
     /**
      * 将字节转换为十六进制字符串
