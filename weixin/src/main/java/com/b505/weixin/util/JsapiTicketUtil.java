@@ -1,6 +1,8 @@
 package com.b505.weixin.util;
 
+import com.b505.weixin.pojo.AccessToken;
 import com.b505.weixin.pojo.Menu;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +29,7 @@ public class JsapiTicketUtil {
     private static Logger log = LoggerFactory.getLogger(JsapiTicketUtil.class);
 
 
-    // 获取access_token的接口地址（GET） 限200（次/天）
+    // 获取access_token的接口地址（GET） 限2000（次/天）
     public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
 
@@ -178,6 +180,35 @@ public class JsapiTicketUtil {
             log.error("https request error:{}", e);
         }
         return jsonObject;
+    }
+
+
+
+    /**
+     * 获取access_token
+     *
+     * @param appid 凭证
+     * @param appsecret 密钥
+     * @return
+     */
+    public static AccessToken getAccessToken(String appid, String appsecret) {
+        AccessToken accessToken = null;
+
+        String requestUrl = access_token_url.replace("APPID", appid).replace("APPSECRET", appsecret);
+        JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
+        // 如果请求成功
+        if (null != jsonObject) {
+            try {
+                accessToken = new AccessToken();
+                accessToken.setToken(jsonObject.getString("access_token"));
+                accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
+            } catch (JSONException e) {
+                accessToken = null;
+                // 获取token失败
+                log.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+            }
+        }
+        return accessToken;
     }
 
 
