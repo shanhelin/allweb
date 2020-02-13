@@ -35,7 +35,7 @@ public class WeixinCoreController {
      * Create date 2020-2-7 19:59
      */
 
-    @RequestMapping(method= RequestMethod.GET   )
+    @GetMapping
     public String WeChatInterface(HttpServletRequest request)throws Exception{
         System.out.println("-------------验证微信服务号信息开始----------");
         // 微信加密签名
@@ -67,7 +67,7 @@ public class WeixinCoreController {
      * author：yulin
      */
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
 
