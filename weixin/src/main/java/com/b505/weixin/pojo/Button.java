@@ -5,6 +5,7 @@ package com.b505.weixin.pojo;
  *
  */
 public class Button {
+
     private String name;
 
     public String getName() {
